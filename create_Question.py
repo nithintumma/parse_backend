@@ -24,12 +24,27 @@ for opt, arg in opts:
     sys.exit()
   elif opt in ("-t", "--type"):
     type = arg
+
+# get the ProductType Object ID
+try:
+  id = product_types[type]
+except KeyError:
+  print "Product type not supported"
+  sys.exit()
+
+# get the question from the user
 question = raw_input("Input question for product type " + type + ": " )
+
+# open the connection
 connection = httplib.HTTPSConnection('api.parse.com', 443)
 connection.connect()
 connection.request('POST', '/1/classes/Question', json.dumps({
-    "type": type,  
-    "description": description  
+    "type": {
+        "__type": "Pointer",
+        "className": "ProductType",
+        "objectId": id
+      },  
+    "question": question 
   }), {
          "X-Parse-Application-Id": "dMu8BAni6T7g63aDFCkO6nQaqvtBzh1FRm5PdQr7",
           "X-Parse-REST-API-Key": "BzMM6tuCdpZSeccZv2K62CNLa9FCQEWbsCiDLNYJ"

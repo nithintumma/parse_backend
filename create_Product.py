@@ -8,7 +8,7 @@
 import sys, getopt
 import json, httplib, urllib
 import os
-
+os.chdir("resources/images")
 product_types = {"artist": "B8VyoXtiFm", "movie": "xgjLaAF8cC", "shirt": "NOXSpiVlla", "shoe": "s6OhTbiVr0"}
 
 type = ''
@@ -16,7 +16,7 @@ description = ''
 name = ''
 image_file = ''
 try:
-  opts, args = getopt.getopt(sys.argv[1:], "ht:n::i", ["type=", "name=", "image="])
+  opts, args = getopt.getopt(sys.argv[1:], "ht:n::i:", ["type=", "name=", "image="])
 except getopt.GetoptError:
   print "create_ProductType.py -t <type> -n <name> -i <image filename>"
 
@@ -29,15 +29,15 @@ for opt, arg in opts:
   elif opt in ("-n", "--name"):
     name = arg
   elif opt in ("-i", "--image"):
+    print "image found"
     image_file = arg
-
 # get the description
 description = raw_input("Input product description for " + name + ": ")
-
+img_path = "resources/images/" + image_file
 # load the image to the Parse cloud
 img_connection = httplib.HTTPSConnection('api.parse.com', 443)
 img_connection.connect()
-img_connection.request("POST", "/1/files/image_file", open(resources/images/image_file, "r") ,{
+img_connection.request("POST", "/1/files/image_file", open(image_file, "r") ,{
     "X-Parse-Application-Id": "dMu8BAni6T7g63aDFCkO6nQaqvtBzh1FRm5PdQr7",
     "X-Parse-REST-API-Key": "BzMM6tuCdpZSeccZv2K62CNLa9FCQEWbsCiDLNYJ",
     "Content-Type": "image/png"
