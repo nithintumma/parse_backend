@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Beacon": {
+            "applicationId": "dMu8BAni6T7g63aDFCkO6nQaqvtBzh1FRm5PdQr7", 
+            "masterKey": "YPk7BExqkrufckp0OxxYMElDnfHIaexrWdsaNClL"
+        }, 
+        "_default": {
+            "link": "Beacon"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.8"
+    }
+}
