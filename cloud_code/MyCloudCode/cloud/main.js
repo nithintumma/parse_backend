@@ -10,7 +10,7 @@ Parse.Cloud.define("getProducts", function(request, response) {
   var type = request.params.type;
   var ProductType = Parse.Object.extend("ProductType");
   var type_query = new Parse.Query(ProductType);
-  type_query.equalTo("type", type);
+  type_query.equalTo("type", "male_shoe");
   type_query.first({
     success : function(results) {
                 var Product = Parse.Object.extend("Product");
@@ -41,7 +41,7 @@ Parse.Cloud.define("getProducts", function(request, response) {
                       			"img_2": second_product.get("image")
                     		}; 
                     		//var single_image = results[rand1].get("image");
-                    		response.success(results);
+                    		response.success(json_return);
                     	},
                     	error: function(error) {
                     		response.error("could not get second user");
