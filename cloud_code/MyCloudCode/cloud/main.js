@@ -60,4 +60,7 @@ Parse.Cloud.define("getProducts", function(request, response) {
 // returns a random useri_info from a users friend list
 Parse.Cloud.define("getRandomFriend", function(request, response) {
   var User = Parse.Object.extend(Parse.User);
+  var query = new Parse.Query(User);
+  type_query.first({
+    success : function(results) {
 });
