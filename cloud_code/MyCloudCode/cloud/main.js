@@ -62,19 +62,18 @@ Parse.Cloud.define("getProducts", function(request, response) {
 
 // returns a random useri_info from a users friend list
 Parse.Cloud.define("getRandomFriend", function(request, response) {  
-  var query = new Parse.Query(Parse.User);  
-  query.first({
-    success : function(results) {
+  var user_id = request.params.id;
+  var query = new Parse.Query(Parse.User); 
+  query.get(user_id, {
+    success : function(user) {
       //gets the friends list
-      var friends = results.get("friends");
+      var friends = user.get("friends");
       var count = friends.length;
-
       //selects a random index
       var rand = Math.floor(Math.random() * count);
-      
       response.success(friends[rand]);
     },
-    error: function(error){
+    error: function(object, error){
       response.error("could not get random user");
    }
   });
