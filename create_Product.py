@@ -8,8 +8,9 @@
 import sys, getopt
 import json, httplib, urllib
 import os
+
 os.chdir("resources/images")
-product_types = {"artist": "B8VyoXtiFm", "movie": "xgjLaAF8cC", "shirt": "NOXSpiVlla", "shoe": "s6OhTbiVr0"}
+product_types = {"artist": "B8VyoXtiFm", "movie": "xgjLaAF8cC", "shirt": "NOXSpiVlla", "shoe": "s6OhTbiVr0"i, "male_shoe": "5HUotzayVP"}
 
 type = ''
 description = ''
@@ -52,7 +53,23 @@ except KeyError:
   print "Product type not supported"
   sys.exit()
 
+# update/get the count 
+connection.connect()
+connection.request('PUT', '/1/classes/ProductType/' + id, json.dumps({
+       "count": {
+         "__op": "Increment",
+         "amount": 1
+       }
+     }), {
+       "X-Parse-Application-Id": "dMu8BAni6T7g63aDFCkO6nQaqvtBzh1FRm5PdQr7",
+       "X-Parse-REST-API-Key": "BzMM6tuCdpZSeccZv2K62CNLa9FCQEWbsCiDLNYJ",
+       "Content-Type": "application/json"
+     })
+result = json.loads(connection.getresponse().read())
+current_count = result["count"]
+
 # open up the connection to create the product
+# field label contains the current count
 connection = httplib.HTTPSConnection('api.parse.com', 443)
 connection.connect()
 connection.request('POST', '/1/classes/Product', json.dumps({
@@ -66,7 +83,8 @@ connection.request('POST', '/1/classes/Product', json.dumps({
         "name": img_name,
         "__type": "File"
       },
-    "description": description  
+    "description": description,
+    "label": current_count  
   }), {
          "X-Parse-Application-Id": "dMu8BAni6T7g63aDFCkO6nQaqvtBzh1FRm5PdQr7",
           "X-Parse-REST-API-Key": "BzMM6tuCdpZSeccZv2K62CNLa9FCQEWbsCiDLNYJ"
