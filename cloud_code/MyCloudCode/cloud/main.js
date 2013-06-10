@@ -16,6 +16,7 @@ Parse.Cloud.define("getProducts", function(request, response) {
                 var Product = Parse.Object.extend("Product");
                 var query = new Parse.Query(Product);
                 query.equalTo("type", results[0]);
+               query.include("type");
                 query.find({
                   success: function(results) {
                     var length = results.length;
@@ -26,19 +27,25 @@ Parse.Cloud.define("getProducts", function(request, response) {
                       rand2 = Math.floor(Math.random() * length);
                     } while (rand2 == rand1);
                     var resp_list = [results[rand1], results[rand2]];
-                    response.success(resp_list);
-                  },
-                  failure: function() {
-                    response.error("could not retrieve products");
-                  }
-                })
-              },
-    failure: function() {
-      response.error("product type not found");
-    }
-  });
+                    var json_return = {
+                      "id_1": results[rand1].id,
+                      "img_1": results[rand1].get("image"),
+                      "id_2": results[rand2].id,
+                      "img_2": results[rand2].get("image")
+                    };
+                    var single_image = results[rand1].get("image");
+                    response.success(single_image);
+             },
+            error: function(error){
+              response.error("could not find user");
+           }});
+    },
+    error: function(error){
+      response.error("could not load product type");       
+    }});
 });
 
-Parse.Cloud.define("getUser", function() {
-  response.success("not implemented yet");
+// returns a random useri_info from a users friend list
+Parse.Cloud.define("getRandomFriend", function(request, response) {
+  var User = Parse.Object.extend(Parse.User);
 });

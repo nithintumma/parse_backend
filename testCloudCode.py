@@ -1,4 +1,5 @@
 import json,httplib
+import types
 connection = httplib.HTTPSConnection('api.parse.com', 443)
 connection.connect()
 connection.request('POST', '/1/functions/getProducts', json.dumps({
@@ -9,5 +10,6 @@ connection.request('POST', '/1/functions/getProducts', json.dumps({
        "Content-Type": "application/json"
      })
 results = json.loads(connection.getresponse().read())
-for result in results["result"]:
-	print "a"
+print results
+print "New Line\n"
+# for result in results["results"]
