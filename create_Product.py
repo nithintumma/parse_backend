@@ -9,7 +9,7 @@ import sys, getopt
 import json, httplib, urllib
 import os
 os.chdir("resources/images")
-product_types = {"artist": "B8VyoXtiFm", "movie": "xgjLaAF8cC", "shirt": "NOXSpiVlla", "shoe": "s6OhTbiVr0"}
+product_types = {"artist": "B8VyoXtiFm", "movie": "xgjLaAF8cC", "shirt": "NOXSpiVlla", "shoe": "s6OhTbiVr0", "male_shoe": "5HUotzayVP"}
 
 type = ''
 description = ''
